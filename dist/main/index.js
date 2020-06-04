@@ -956,14 +956,19 @@ class ExecState extends events.EventEmitter {
 /***/ 31:
 /***/ (function(__unusedmodule, __unusedexports, __webpack_require__) {
 
-const core = __webpack_require__(470);
-const terminal = __webpack_require__(986);
+(async () => {
+  const core = __webpack_require__(470);
+  const terminal = __webpack_require__(986);
 
-const username = core.getInput('username');
-const password = core.getInput('password');
-const loginServer = core.getInput('login-server');
+  const username = core.getInput('username', {required: true});
+  const password = core.getInput('password', {required: true});
+  const loginServer = core.getInput('login-server', {required: true});
 
-terminal.exec(`docker login -u ${username} -p ${password} ${loginServer}`);
+  const exitCode = await terminal.exec(`docker login -u ${username} -p ${password} ${loginServer}`)
+  if(exitCode !== 0) {
+    core.setFailed(`Exit code: ${exitCode}`);
+  }
+})();
 
 
 /***/ }),
