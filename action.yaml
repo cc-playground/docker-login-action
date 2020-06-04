@@ -1,0 +1,11 @@
+name: 'Docker Login'
+inputs:
+  username:
+    required: true
+  password:
+    required: true
+  login-server:
+    required: true
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
