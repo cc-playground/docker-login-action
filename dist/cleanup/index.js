@@ -975,6 +975,11 @@ module.exports = require("child_process");
   const terminal = __webpack_require__(986);
   const loginServer = core.getInput('login-server', {required: true});
 
+  core.info(loginServer);
+  if(!loginServer) {
+    core.setFailed(`login-server is falsy`);
+  }
+
   const exitCode = await terminal.exec(`docker logout ${loginServer}`);
   if(exitCode !== 0) {
     core.setFailed(`Exit code: ${exitCode}`);
